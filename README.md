@@ -8,6 +8,7 @@ A Todo List REST API built with Node.js, ExpressJS, MongoDB. This API enables us
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Clone the Repository](#clone-the-repository)
+  - [Set Up the Environment](#setup-env)
   - [Set Up MongoDB](#set-up-mongodb)
   - [Install Dependencies](#install-dependencies)
   - [Running the Server](#running-the-server)
@@ -36,6 +37,12 @@ To get a local copy of the project, clone the repository:
 ```bash
 git clone https://github.com/yourusername/todo-app.git
 cd todo-app
+```
+
+### Set Up the Environment
+Copy the Sample File: Copy the .env.example file to create your own .env file
+```bash
+cp .env.example .env
 ```
 ### Set Up MongoDB
 Ensure your MongoDB server is running. If you are using a local instance, start it with:
