@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const routes = require('./src/routes');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config(); // Load environment variables from .env file
@@ -27,6 +28,9 @@ initializeApp();
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+
+// Routes
+app.use('/api', routes);
 
 // Start server
 const PORT = process.env.PORT || 3000;
