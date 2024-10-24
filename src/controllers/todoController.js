@@ -4,7 +4,11 @@ const { Validator } = require('node-input-validator');
 let todo = {
     getTodo: async (req, res) => {
         try {
+            let todoList = await Todo.find({
+                userId: req.userId
+            });
 
+            return res.status(200).send({ success: 1, data: todoList });
         } catch (error) {
             return res.status(500).send({ success: 0, message: "Internal Server Error" });
         }
