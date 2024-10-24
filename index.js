@@ -4,6 +4,7 @@ const routes = require('./src/routes');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config(); // Load environment variables from .env file
+require('./src/cron/cron.js');
 
 // Initialize Express app
 const app = express();

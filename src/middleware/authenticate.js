@@ -13,7 +13,7 @@ async function authenticate(req, res, next) {
         if (err) {
             return res.status(401).json({ message: 'Authentication failed: Invalid token.' });
         }
-        console.log("Decoded: ", decoded);
+        // console.log("Decoded: ", decoded);
         let userDetail = await userModel.findOne({
             userId: decoded.userId
         });
