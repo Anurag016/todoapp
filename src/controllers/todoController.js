@@ -29,7 +29,7 @@ let todo = {
 
             //Validate Due Date
             let currDate = new Date();
-            currDate = currDate.getFullYear()+"-"+(currDate.getMonth()+1)+"-"+ currDate.getDate();
+            currDate = currDate.getFullYear() + "-" + (currDate.getMonth() + 1) + "-" + currDate.getDate();
             currDate = new Date(currDate)
 
             if (currDate > new Date(req.body.dueDate)) {
@@ -51,6 +51,55 @@ let todo = {
     },
     updateTodo: async (req, res) => {
         try {
+            //Check Validation
+            const v = new Validator(req.body, {
+                id: "required"
+            });
+
+            const matched = await v.check();
+            if (!matched) {
+                return res.status(422).send({ success: 0, message: v.errors })
+            }
+
+            let updateClause = {}
+            if (req.body.title) {
+                updateClause.title = req.body.title;
+            }
+            if (req.body.description) {
+                updateClause.description = req.body.description;
+            }
+            if (req.body.dueDate) {
+                //check due date validation
+                const v1 = new Validator(req.body, {
+                    dueDate: "required|dateFormat:YYYY-MM-DD"
+                });
+
+                const matched = await v1.check();
+                if (!matched) {
+                    return res.status(422).send({ success: 0, message: v1.errors })
+                }
+
+                //Validate Due Date
+                let currDate = new Date();
+                currDate = currDate.getFullYear() + "-" + (currDate.getMonth() + 1) + "-" + currDate.getDate();
+                currDate = new Date(currDate)
+
+                if (currDate > new Date(req.body.dueDate)) {
+                    return res.status(200).send({ success: 0, message: "Due Date Should be Greater than or equal to Today" })
+                }
+
+                updateClause.dueDate = req.body.dueDate;
+            }
+
+            //Update Data
+            await Todo.findOneAndUpdate({
+                _id: req.body.id,
+                userId: req.userId
+            }, {
+                $set: updateClause
+            });
+
+            return res.status(200).send({ success: 1, message: "Updated" });
 
         } catch (error) {
             return res.status(500).send({ success: 0, message: "Internal Server Error" });
