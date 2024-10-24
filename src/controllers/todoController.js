@@ -107,7 +107,32 @@ let todo = {
     },
     deleteTodo: async (req, res) => {
         try {
+            //Check Validation
+            const v = new Validator(req.body, {
+                id: "required"
+            });
 
+            const matched = await v.check();
+            if (!matched) {
+                return res.status(422).send({ success: 0, message: v.errors })
+            }
+
+            let todoDetail = await Todo.findOne({
+                _id: req.body.id,
+                userId:req.userId
+            });
+
+            if(!todoDetail){
+                return res.status(200).send({success:0,message:"Data Not Found"})
+            }
+
+            //Delete Document
+             await Todo.findOneAndDelete({
+                _id: req.body.id,
+                userId:req.userId
+            });
+
+            return res.status(200).send({ success: 1, message: "Deleted" });
         } catch (error) {
             return res.status(500).send({ success: 0, message: "Internal Server Error" });
         }
