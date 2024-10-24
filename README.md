@@ -184,19 +184,6 @@ Upon successful login, a token will be generated. This token is essential for au
     }
     ```
 
-## Error Handling
-Common error responses:
-- **404 Not Found**: Item does not exist.
-- **500 Internal Server Error**: An error occurred on the server.
-
-## Usage Examples
-Examples of how to make requests using tools like Postman or curl.
-
-## Change Log
-Track changes here.
-
-
-
 
 ## Error Handling
 The API implements a structured approach to error handling. Below are the different types of responses users may encounter:
