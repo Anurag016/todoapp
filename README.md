@@ -12,6 +12,7 @@ A Todo List REST API built with Node.js, ExpressJS, MongoDB. This API enables us
   - [Set Up MongoDB](#set-up-mongodb)
   - [Install Dependencies](#install-dependencies)
   - [Running the Server](#running-the-server)
+- [API Documentation](#api-documentation)
 - [Error Handling](#error-handling)
 
 ## Technologies Used
@@ -36,7 +37,7 @@ To get a local copy of the project, clone the repository:
 
 ```bash
 git clone https://github.com/yourusername/todo-app.git
-cd todo-app
+cd todoapp
 ```
 
 ### Set Up the Environment
@@ -63,6 +64,139 @@ Start the application using:
 ```bash
 node index.js
 ```
+## API Documentation
+### Base URL
+`http://localhost:3000/api`
+
+## Authentication
+Upon successful login, a token will be generated. This token is essential for authenticating your requests to all other API endpoints.
+- You must include the token in the header of your requests for all APIs except the login API.
+### Example
+```json
+{token: #token}
+```
+
+## Endpoints
+
+### 1. Login API
+- **Method**: `POST`
+- **Endpoint**: `/login`
+- **Request Body**:
+    ```json
+    {
+     "email":"test@test.com",
+     "password":"123456"
+    }
+    ```
+- **Response**:
+  - **Status Code**: 200
+  - **Body**:
+    ```json
+    {
+        "success": 1,
+        "data":{
+          "token":"#TOKEN",
+          "name":"USER" 
+         }
+    }
+    ```
+
+### 2. Get All Todos
+- **Method**: `GET`
+- **Endpoint**: `/v1/get-todo`
+- **Description**: Retrieve all Todo items for user.
+- **Response**:
+  - **Status Code**: 200
+  - **Body**:
+    ```json
+    {
+    success:1,
+    data:[
+        {
+            "_id": "1234",
+            "title": "Todo",
+            "description":"Desc Todo"
+            "completed": false,
+            "dueDate": "2024-10-31"
+        }
+    ]
+   }
+    ```
+
+### 3. Create a Todo
+- **Method**: `POST`
+- **Endpoint**: `/v1/add-todo`
+- **Request Body**:
+    ```json
+    {
+        "title": "New Todo",
+        "description":"New Desc"
+        "dueDate": "2024-10-31" //Format : "YYYY-MM-DD"
+    }
+    ```
+- **Response**:
+  - **Status Code**: 200
+  - **Body**:
+    ```json
+    {
+        "success": 1,
+        "message":"Created"
+    }
+    ```
+### 4. Update a Todo
+- **Method**: `PUT`
+- **Endpoint**: `/v1/update-todo`
+- **Request Body**:
+    ```json
+    {
+    "id":"671969595e4e6bfcacfa85c6",  // _id from todo list
+    "title":"Update val",
+    "description":"DESC Update",
+    "dueDate":"2023-10-12"
+    }
+    ```
+- **Response**:
+  - **Status Code**: 200
+  - **Body**:
+    ```json
+    {
+        "success": 1,
+        "message":"Updated"
+    }
+    ```
+
+### 5. Delete a Todo
+- **Method**: `DELETE`
+- **Endpoint**: `/v1/delete-todo`
+- **Request Body**:
+    ```json
+    {
+    "id":"671969595e4e6bfcacfa85c6", // _id from todo list
+    }
+    ```
+- **Response**:
+  - **Status Code**: 200
+  - **Body**:
+    ```json
+    {
+        "success": 1,
+        "message":"Deleted"
+    }
+    ```
+
+## Error Handling
+Common error responses:
+- **404 Not Found**: Item does not exist.
+- **500 Internal Server Error**: An error occurred on the server.
+
+## Usage Examples
+Examples of how to make requests using tools like Postman or curl.
+
+## Change Log
+Track changes here.
+
+
+
 
 ## Error Handling
 The API implements a structured approach to error handling. Below are the different types of responses users may encounter:
